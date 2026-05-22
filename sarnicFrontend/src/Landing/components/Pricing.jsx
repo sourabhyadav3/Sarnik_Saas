@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Check, Zap, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { startFreeTrial } from '../../utils/trial';
 
 const plans = [
   {
@@ -164,12 +165,24 @@ export default function Pricing() {
                 <span className="text-slate-500 text-sm mb-2">/mo</span>
               </div>
 
-              <Link
-                to="/login"
-                className={`w-full block text-center py-3 rounded-xl text-sm font-semibold mb-6 ${plan.ctaClass}`}
-              >
-                {plan.cta}
-              </Link>
+              {plan.name === 'Growth' ? (
+                <button
+                  onClick={() => {
+                    startFreeTrial();
+                    window.location.href = "/signup";
+                  }}
+                  className={`w-full block text-center py-3 rounded-xl text-sm font-semibold mb-6 ${plan.ctaClass}`}
+                >
+                  {plan.cta}
+                </button>
+              ) : (
+                <Link
+                  to={plan.name === 'Starter' ? "/signup" : "/login"}
+                  className={`w-full block text-center py-3 rounded-xl text-sm font-semibold mb-6 ${plan.ctaClass}`}
+                >
+                  {plan.cta}
+                </Link>
+              )}
 
               <div className="space-y-3">
                 {plan.features.map((f) => (

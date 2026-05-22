@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import "./App.css";
 import { useState, useEffect } from "react";
 import { ToastContainer } from "react-toastify";
@@ -76,10 +76,33 @@ import SuperAdminSubscriptions from "./Component/SuperAdmin_Dashboard/Subscripti
 import SuperAdminAnalytics from "./Component/SuperAdmin_Dashboard/Analytics/SuperAdminAnalytics";
 import { isSuperAdminRoute } from "./utils/auth";
 import { ROLES } from "./utils/roles";
+import SubscriptionRequired from "./Component/SubscriptionRequired/SubscriptionRequired";
+import { checkTrialStatus } from "./utils/trial";
 
 function App() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const [trialInfo, setTrialInfo] = useState({ active: false, expired: false, daysRemaining: 0 });
+
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    if (user) {
+      try {
+        const parsedUser = JSON.parse(user);
+        if (parsedUser.role_name !== ROLES.SUPERADMIN) {
+          setTrialInfo(checkTrialStatus());
+        } else {
+          setTrialInfo({ active: false, expired: false, daysRemaining: 0 });
+        }
+      } catch (e) {
+        setTrialInfo({ active: false, expired: false, daysRemaining: 0 });
+      }
+    } else {
+      setTrialInfo({ active: false, expired: false, daysRemaining: 0 });
+    }
+  }, [location.pathname]);
 
   useEffect(() => {
     if (window.innerWidth <= 768) {
@@ -95,7 +118,8 @@ function App() {
     location.pathname === "/" ||
     location.pathname === "/login" ||
     location.pathname === "/signup" ||
-    location.pathname === "/forgot-password";
+    location.pathname === "/forgot-password" ||
+    location.pathname === "/subscription-required";
 
   const isSuperAdmin = isSuperAdminRoute(location.pathname);
 
@@ -114,6 +138,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/subscription-required" element={<SubscriptionRequired />} />
         </Routes>
       ) : isSuperAdmin ? (
         <ProtectedRoute allowedRoles={[ROLES.SUPERADMIN]}>
@@ -141,6 +166,24 @@ function App() {
             />
 
             <div className={`right-side-content ${isSidebarCollapsed ? "collapsed" : ""}`}>
+              {trialInfo.active && trialInfo.daysRemaining > 0 && (
+                <div className={`trial-banner ${trialInfo.daysRemaining <= 2 ? 'warning' : 'info'}`}>
+                  <div className="trial-banner-inner">
+                    <span className="banner-badge">{trialInfo.daysRemaining <= 2 ? "EXPIRES SOON" : "TRIAL ACTIVE"}</span>
+                    <span className="banner-text">
+                      {trialInfo.daysRemaining <= 2
+                        ? `⚠️ Your free trial expires in ${trialInfo.daysRemaining} days! Upgrade to a premium plan to avoid interruption.`
+                        : `⚡ You have ${trialInfo.daysRemaining} days remaining in your free trial.`}
+                    </span>
+                    <button 
+                      onClick={() => navigate("/subscription-required")}
+                      className="banner-upgrade-action"
+                    >
+                      Upgrade Now
+                    </button>
+                  </div>
+                </div>
+              )}
               <Routes>
 
                 {/* Common */}
