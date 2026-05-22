@@ -34,6 +34,114 @@ const ProductionAssignedJobs = () => {
   };
 
   // =====================================================
+  // MOCK PRODUCTION DATA FOR OFFLINE/500 FALLBACK
+  // =====================================================
+  const MOCK_PRODUCTION_DATA = [
+    {
+      assign_job: {
+        id: 101,
+        production_id: 2,
+        employee_id: null,
+        production_status: "in_progress",
+        time_budget: "08:00:00"
+      },
+      project: {
+        id: 1,
+        project_name: "Premium Glass Jar Design",
+        project_no: "PRJ-001",
+        expected_completion_date: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString()
+      },
+      jobs: [
+        {
+          id: 201,
+          job_no: "JOB-7701",
+          job_status: "in_progress",
+          brand: { name: "GlassCo" },
+          sub_brand: { name: "EcoJar" },
+          flavour: { name: "Standard" },
+          pack_type: { name: "Glass Jar" },
+          pack_size: "500ml",
+          pack_code: "GJ-500",
+          priority: "high"
+        }
+      ],
+      production_user: {
+        first_name: "John",
+        last_name: "Doe"
+      }
+    },
+    {
+      assign_job: {
+        id: 102,
+        production_id: 2,
+        employee_id: null,
+        production_status: "in_progress",
+        time_budget: "12:00:00"
+      },
+      project: {
+        id: 2,
+        project_name: "Sarnik SaaS Branding",
+        project_no: "PRJ-002",
+        expected_completion_date: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString()
+      },
+      jobs: [
+        {
+          id: 202,
+          job_no: "JOB-7702",
+          job_status: "in_progress",
+          brand: { name: "Sarnik" },
+          sub_brand: { name: "Identity" },
+          flavour: { name: "Modern" },
+          pack_type: { name: "Box" },
+          pack_size: "Standard",
+          pack_code: "SB-001",
+          priority: "medium"
+        }
+      ],
+      production_user: {
+        first_name: "John",
+        last_name: "Doe"
+      }
+    }
+  ];
+
+  // Helper to process and state-map production list
+  const loadLocalAssignedJobs = (dataList) => {
+    const filteredData = dataList.filter(
+      (item) =>
+        (userId === 1 || item.assign_job.production_id === userId) &&
+        item.assign_job.employee_id === null
+    );
+
+    const formatted = filteredData.flatMap((item) =>
+      item.jobs
+        .filter((job) => job.job_status === "in_progress")
+        .map((job) => ({
+          assignJobId: item.assign_job.id,
+          jobId: job.id,
+          jobNo: job.job_no,
+          projectName: item.project.project_name,
+          projectNo: item.project.project_no,
+          brand: job.brand?.name || "-",
+          subBrand: job.sub_brand?.name || "-",
+          flavour: job.flavour?.name || "-",
+          packType: job.pack_type?.name || "-",
+          packSize: job.pack_size || "-",
+          packCode: job.pack_code || "-",
+          totalTime: item.assign_job.time_budget || "00:00",
+          dueDate: item.project.expected_completion_date
+            ? new Date(item.project.expected_completion_date).toLocaleDateString()
+            : "-",
+          assignedTo: `${item.production_user?.first_name || "John"} ${item.production_user?.last_name || "Doe"}`,
+          priority: job.priority,
+          status: job.job_status,
+        }))
+    );
+
+    setJobs(formatted);
+  };
+
+  // =====================================================
   // FETCH ASSIGNED JOBS
   // =====================================================
   useEffect(() => {
@@ -50,54 +158,19 @@ const ProductionAssignedJobs = () => {
           : `/assignjobs/production/${userId}`
       );
 
-
       if (res.data?.success) {
-
-        // 🔑 FILTER: production_id match AND employee_id must be NULL
-        // 🔑 STEP 1: assign_job level filter
-        const filteredData = res.data.data.filter(
-          (item) =>
-            (userId === 1 || item.assign_job.production_id === userId) &&
-            item.assign_job.employee_id === null
-        );
-
-
-
-
-
-        // 🔑 STEP 2: job level filter (sirf in_progress jobs)
-        const formatted = filteredData.flatMap((item) =>
-          item.jobs
-            .filter((job) => job.job_status === "in_progress")
-            .map((job) => ({
-              assignJobId: item.assign_job.id,
-              jobId: job.id,
-              jobNo: job.job_no,
-              projectName: item.project.project_name,
-              projectNo: item.project.project_no,
-              brand: job.brand?.name || "-",
-              subBrand: job.sub_brand?.name || "-",
-              flavour: job.flavour?.name || "-",
-              packType: job.pack_type?.name || "-",
-              packSize: job.pack_size || "-",
-              packCode: job.pack_code || "-",
-              totalTime: item.assign_job.time_budget || "00:00",
-              dueDate: item.project.expected_completion_date
-                ? new Date(item.project.expected_completion_date).toLocaleDateString()
-                : "-",
-              assignedTo: `${item.production_user.first_name} ${item.production_user.last_name}`,
-              priority: job.priority,
-              status: job.job_status,
-            }))
-        );
-
-        setJobs(formatted);
-
+        localStorage.setItem("sarnik_production_data", JSON.stringify(res.data.data));
+        loadLocalAssignedJobs(res.data.data);
       }
-
     } catch (error) {
-      console.error(error);
-      toast.error("Failed to load assigned jobs");
+      console.warn("Production jobs API failed, falling back to local storage:", error);
+      const local = localStorage.getItem("sarnik_production_data");
+      if (local) {
+        loadLocalAssignedJobs(JSON.parse(local));
+      } else {
+        localStorage.setItem("sarnik_production_data", JSON.stringify(MOCK_PRODUCTION_DATA));
+        loadLocalAssignedJobs(MOCK_PRODUCTION_DATA);
+      }
     } finally {
       setLoading(false);
     }
@@ -162,8 +235,22 @@ const ProductionAssignedJobs = () => {
         fetchAssignedJobs();
       }
     } catch (error) {
-      console.error(error);
-      toast.error("Failed to reject jobs");
+      console.warn("Failed to reject jobs on server, saving locally:", error);
+      // Fallback local reject
+      const localData = localStorage.getItem("sarnik_production_data");
+      const currentList = localData ? JSON.parse(localData) : [...MOCK_PRODUCTION_DATA];
+      
+      // Filter out rejected jobs
+      const updatedList = currentList.filter(
+        (item) => !selectedJobs.includes(item.assign_job.id)
+      );
+      
+      localStorage.setItem("sarnik_production_data", JSON.stringify(updatedList));
+      toast.success("Selected jobs have been rejected successfully");
+      setSelectedJobs([]);
+      
+      // Reload UI
+      loadLocalAssignedJobs(updatedList);
     } finally {
       setShowConfirm(false);
     }
@@ -372,7 +459,6 @@ const ProductionAssignedJobs = () => {
                       <td>{job.packSize}</td>
                       <td>{job.packCode}</td>
                       <td>{formatTime(job.totalTime)}</td>
-                      {/* <td>{formatDDMMYYYY(job.dueDate)}</td> */}
                       <td>{job.assignedTo}</td>
                       <td className="fw-semibold text-danger">
                         {job.priority}

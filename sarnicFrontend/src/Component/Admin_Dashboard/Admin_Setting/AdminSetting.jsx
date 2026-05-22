@@ -87,31 +87,20 @@ const AdminSetting = () => {
     }
   };
 
-  // --- Mock/Local Fallback for Number Settings ---
-  const MOCK_SEQUENCES = [
-    { id: 1, label: "Job Number Sequence", sequence_key: "JOB", default_start: 1000 },
-    { id: 2, label: "Purchase Order Sequence", sequence_key: "PO", default_start: 1000 },
-    { id: 3, label: "Invoice Sequence", sequence_key: "INV", default_start: 1000 },
-  ];
-
-  // --- API Functions for Number Settings ---
+  // --- API Functions for Number Settings (Using real backend database records) ---
   const fetchSequences = async () => {
     try {
       const res = await axiosInstance.get("/number-sequences");
-      setSequences(res.data?.data || []);
-      setEditedSequences({});
-    } catch (error) {
-      console.warn("Number sequences API failed, falling back to local storage:", error);
-      // Load from localStorage or initialize with mock data
-      const local = localStorage.getItem("sarnik_number_sequences");
-      if (local) {
-        setSequences(JSON.parse(local));
+      if (res.data?.success) {
+        setSequences(res.data.data || []);
       } else {
-        localStorage.setItem("sarnik_number_sequences", JSON.stringify(MOCK_SEQUENCES));
-        setSequences(MOCK_SEQUENCES);
+        toast.error("Failed to load number sequences");
       }
-      setEditedSequences({});
+    } catch (error) {
+      console.error("Error fetching number sequences:", error);
+      toast.error("Failed to load number sequences from database");
     }
+    setEditedSequences({});
   };
 
   const handleSequenceChange = (id, value) => {
@@ -124,30 +113,20 @@ const AdminSetting = () => {
       toast.error("Please enter a valid number");
       return;
     }
+    
     try {
-      await axiosInstance.put(`/number-sequences/${id}`, {
+      const res = await axiosInstance.put(`/number-sequences/${id}`, {
         default_start: Number(value),
       });
-      toast.success("Number sequence updated successfully");
-      fetchSequences();
+      if (res.data?.success) {
+        toast.success("Number sequence updated successfully in database");
+        fetchSequences();
+      } else {
+        toast.error("Failed to update number sequence");
+      }
     } catch (error) {
-      console.warn("Failed to update sequence on server, saving locally:", error);
-      // Fallback local save
-      const currentLocal = localStorage.getItem("sarnik_number_sequences");
-      const list = currentLocal ? JSON.parse(currentLocal) : [...MOCK_SEQUENCES];
-      
-      const updatedList = list.map((seq) => 
-        seq.id === id ? { ...seq, default_start: Number(value) } : seq
-      );
-      
-      localStorage.setItem("sarnik_number_sequences", JSON.stringify(updatedList));
-      setSequences(updatedList);
-      setEditedSequences((prev) => {
-        const next = { ...prev };
-        delete next[id];
-        return next;
-      });
-      toast.success("Number sequence updated successfully (Local)");
+      console.error("Error updating number sequence:", error);
+      toast.error("Failed to update number sequence in database");
     }
   };
 
