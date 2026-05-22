@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 export default function CTA() {
   return (
-    <section className="relative z-10 py-28 px-6 overflow-hidden">
+    <section className="relative z-10 py-6 px-6 overflow-hidden">
       {/* Background orbs */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full"
@@ -14,13 +14,13 @@ export default function CTA() {
           style={{ background: 'radial-gradient(circle, rgba(168,85,247,0.10) 0%, transparent 70%)', filter: 'blur(40px)' }} />
       </div>
 
-      <div className="max-w-4xl mx-auto text-center relative">
+      <div className="max-w-full px-6 md:px-12 lg:px-20 mx-auto text-center relative">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="glass-strong rounded-3xl p-14 border border-indigo-500/20"
+          className="glass-strong rounded-3xl p-10 border border-indigo-500/20"
           style={{ boxShadow: '0 0 80px rgba(99,102,241,0.12), 0 0 160px rgba(99,102,241,0.05)' }}
         >
           <motion.div

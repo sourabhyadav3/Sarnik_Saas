@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import logo from "../assets/WorkflowLogo.svg";
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -43,17 +44,17 @@ const Signup = () => {
     <div className="container-fluid min-vh-100 d-flex align-items-center justify-content-center bg-light p-4">
       <div
         className="card shadow-lg w-100"
-        style={{ maxWidth: "1000px", borderRadius: "2rem" }}
+        style={{ maxWidth: "500px", borderRadius: "2rem" }}
       >
         <div className="row g-0">
-          {/* Left Form Section */}
-          <div className="col-12 col-md-6 p-5 text-center">
+          {/* Form Section */}
+          <div className="col-12 p-5 text-center">
             <div className="d-flex justify-content-center align-items-center mb-4">
               <img
-                src="https://i.postimg.cc/mZHz3k1Q/Whats-App-Image-2025-07-23-at-12-38-03-add5b5dd-removebg-preview-1.png"
+                src={logo}
                 alt="logo"
                 className="navbar-logo m-2"
-                style={{ height: "50px" }}
+                style={{ height: "55px" }}
               />
           
             </div>
@@ -160,21 +161,6 @@ const Signup = () => {
                 </Link>
               </div>
             </form>
-          </div>
-
-          {/* Right Image Sectionhdf */}
-          <div className="col-md-6 d-none d-md-block">
-            <div className="h-100 position-relative">
-              <img
-                src="https://i.postimg.cc/GpVFJDn8/create-image-for-resturant-and-game-zone-pool-for-login-page-right-side-image-do-not-write-anything.jpg"
-                alt="Signup Illustration"
-                className="img-fluid h-100 w-100 object-fit-cover"
-                style={{
-                  borderTopRightRadius: "2rem",
-                  borderBottomRightRadius: "2rem",
-                }}
-              />
-            </div>
           </div>
         </div>
       </div>

@@ -28,7 +28,7 @@ export default function Navbar() {
 
   return (
     <nav className={`landing-nav ${scrolled ? 'scrolled' : ''}`}>
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div className="max-w-full px-6 md:px-12 lg:px-20 mx-auto py-4 flex items-center justify-between">
         {/* Logo */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -39,7 +39,7 @@ export default function Navbar() {
           <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
             <Zap className="w-4 h-4 text-white" />
           </div>
-          <span className="text-white font-bold text-xl tracking-tight">Workflow MS</span>
+          <span className="text-white font-bold text-xl tracking-tight">Workflow</span>
           <span className="text-xs text-indigo-400 border border-indigo-500/30 rounded-full px-2 py-0.5 font-medium">SaaS</span>
         </motion.div>
 

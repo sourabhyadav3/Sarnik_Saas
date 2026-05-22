@@ -58,17 +58,17 @@ const allTestimonials = [...testimonials, ...testimonials];
 
 export default function Testimonials() {
   return (
-    <section className="relative z-10 py-28 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="relative z-10 py-6 overflow-hidden">
+      <div className="max-w-full px-6 md:px-12 lg:px-20 mx-auto">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-14"
+          className="text-center mb-8"
         >
-          <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 mb-5">
+          <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 mb-3">
             <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
             <span className="text-xs text-slate-400 font-medium">Customer Stories</span>
           </div>

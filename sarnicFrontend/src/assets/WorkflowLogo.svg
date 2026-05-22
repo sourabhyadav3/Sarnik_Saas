@@ -22,6 +22,5 @@
   </g>
   <!-- Logo Text -->
   <text x="68" y="30" font-family="system-ui, -apple-system, sans-serif" font-weight="800" font-size="22" fill="url(#textGrad)" letter-spacing="0.5">Workflow</text>
-  <text x="178" y="30" font-family="system-ui, -apple-system, sans-serif" font-weight="800" font-size="22" fill="#4f46e5" letter-spacing="0.5">MS</text>
   <text x="68" y="46" font-family="system-ui, -apple-system, sans-serif" font-weight="700" font-size="8.5" fill="#64748b" letter-spacing="1.8">MANAGEMENT SYSTEM</text>
 </svg>

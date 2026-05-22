@@ -28,7 +28,7 @@ export default function Footer() {
               <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
                 <Zap className="w-4 h-4 text-white" />
               </div>
-              <span className="text-white font-bold text-xl tracking-tight">Workflow MS</span>
+              <span className="text-white font-bold text-xl tracking-tight">Workflow</span>
             </div>
             <p className="text-slate-500 text-sm leading-relaxed mb-5 max-w-xs">
               The enterprise SaaS platform for managing workflows, production, and revenue at scale.

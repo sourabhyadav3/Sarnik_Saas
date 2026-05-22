@@ -267,9 +267,9 @@
 ::-webkit-scrollbar-thumb:hover { background: rgba(99,102,241,0.7); }
 
 /* ---- Responsive helpers ---- */
-@media (max-width: 768px) {
-  .hero-dashboard-inner { transform: none; }
-  .hero-dashboard-inner:hover { transform: none; }
+@media (max-width: 1024px) {
+  .hero-dashboard-inner { transform: none !important; }
+  .hero-dashboard-inner:hover { transform: none !important; }
   .timeline-line { left: 20px; }
   .orb { display: none; }
 }

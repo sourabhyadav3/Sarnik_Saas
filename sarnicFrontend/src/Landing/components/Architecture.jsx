@@ -48,8 +48,8 @@ export default function Architecture() {
   const [hoveredNode, setHoveredNode] = useState(null);
 
   return (
-    <section id="architecture" className="relative z-10 py-28 px-6">
-      <div className="max-w-5xl mx-auto">
+    <section id="architecture" className="relative z-10 py-6 px-6">
+      <div className="max-w-full px-6 md:px-12 lg:px-20 mx-auto">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -71,80 +71,64 @@ export default function Architecture() {
         </motion.div>
 
         {/* Node Diagram */}
-        <div className="flex flex-col items-center gap-0">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
           {nodes.map((node, i) => (
-            <React.Fragment key={node.id}>
-              {/* Connection */}
-              {i > 0 && (
-                <motion.div
-                  initial={{ opacity: 0, scaleY: 0 }}
-                  whileInView={{ opacity: 1, scaleY: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: i * 0.15 }}
-                  className="flex flex-col items-center"
-                  style={{ originY: 0 }}
-                >
-                  <div className="w-px h-8 bg-gradient-to-b from-indigo-500/60 to-indigo-500/20" />
-                  <ChevronDown className="w-4 h-4 text-indigo-500/60 -mt-1" />
-                </motion.div>
-              )}
-
-              <motion.div
-                initial={{ opacity: 0, scale: 0.85 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.12 }}
-                whileHover={{ scale: 1.03 }}
-                onHoverStart={() => setHoveredNode(node.id)}
-                onHoverEnd={() => setHoveredNode(null)}
-                className="w-full max-w-md glass rounded-2xl p-5 cursor-pointer transition-all duration-300"
-                style={{
-                  boxShadow: hoveredNode === node.id
-                    ? `0 0 40px ${node.glow}, 0 0 1px 1px ${node.border}`
-                    : `0 0 0 1px rgba(255,255,255,0.07)`,
-                }}
-              >
-                <div className="flex items-center gap-4">
-                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${node.color} flex items-center justify-center text-white flex-shrink-0`}
-                    style={{ boxShadow: `0 0 20px ${node.glow}` }}>
-                    {node.icon}
-                  </div>
-                  <div className="flex-1">
-                    <div className="text-white font-bold text-base">{node.label}</div>
-                    <div className="text-slate-400 text-sm">{node.sub}</div>
-                    {node.count && (
-                      <div className="text-xs text-slate-500 mt-0.5 font-mono">{node.count}</div>
-                    )}
+            <motion.div
+              key={node.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: i * 0.1 }}
+              whileHover={{ y: -4, scale: 1.02 }}
+              onHoverStart={() => setHoveredNode(node.id)}
+              onHoverEnd={() => setHoveredNode(null)}
+              className="w-full glass rounded-xl p-3.5 cursor-pointer transition-all duration-300 flex flex-col justify-between"
+              style={{
+                boxShadow: hoveredNode === node.id
+                  ? `0 0 30px ${node.glow}, 0 0 1px 1px ${node.border}`
+                  : `0 0 0 1px rgba(255,255,255,0.07)`,
+              }}
+            >
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${node.color} flex items-center justify-center text-white flex-shrink-0`}
+                    style={{ boxShadow: `0 0 15px ${node.glow}` }}>
+                    {React.cloneElement(node.icon, { className: 'w-4 h-4' })}
                   </div>
                   {/* Animated rings */}
-                  <div className="relative w-8 h-8 flex-shrink-0">
+                  <div className="relative w-5 h-5 flex-shrink-0">
                     <motion.div
                       animate={{ scale: [1, 1.4, 1], opacity: [0.6, 0, 0.6] }}
                       transition={{ duration: 2, repeat: Infinity, delay: i * 0.3 }}
                       className="absolute inset-0 rounded-full"
                       style={{ background: `${node.glow}` }}
                     />
-                    <div className="absolute inset-1 rounded-full"
+                    <div className="absolute inset-0.5 rounded-full"
                       style={{ background: `linear-gradient(135deg, ${node.glow}, transparent)` }} />
                   </div>
                 </div>
 
-                {/* Isolation badge */}
-                {hoveredNode === node.id && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 5 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="mt-3 pt-3 border-t border-white/5 flex gap-2"
-                  >
-                    {['Isolated Data', 'Separate Config', 'Role Gated'].map(badge => (
-                      <span key={badge} className="text-xs bg-white/5 text-slate-400 rounded-full px-2.5 py-1">
-                        {badge}
-                      </span>
-                    ))}
-                  </motion.div>
+                <div className="text-white font-extrabold text-sm mb-0.5">{node.label}</div>
+                <div className="text-slate-400 text-[11px] leading-tight mb-2">{node.sub}</div>
+              </div>
+
+              <div>
+                {node.count && (
+                  <div className="text-[10px] text-indigo-400/80 font-semibold font-mono bg-indigo-500/5 rounded px-2 py-0.5 w-fit mb-2">
+                    {node.count}
+                  </div>
                 )}
-              </motion.div>
-            </React.Fragment>
+
+                {/* Isolation badge */}
+                <div className="flex gap-1 flex-wrap mt-1">
+                  {['Isolated Data', 'Role Gated'].map(badge => (
+                    <span key={badge} className="text-[8px] bg-white/5 text-slate-400 rounded-full px-2 py-0.5">
+                      {badge}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
           ))}
         </div>
 

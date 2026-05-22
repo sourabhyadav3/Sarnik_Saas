@@ -72,17 +72,17 @@ export default function FAQ() {
   const [openIdx, setOpenIdx] = useState(null);
 
   return (
-    <section className="relative z-10 py-28 px-6">
-      <div className="max-w-3xl mx-auto">
+    <section className="relative z-10 py-6 px-6">
+      <div className="max-w-full px-6 md:px-12 lg:px-20 mx-auto">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-14"
+          className="text-center mb-8"
         >
-          <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 mb-5">
+          <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 mb-3">
             <HelpCircle className="w-3.5 h-3.5 text-sky-400" />
             <span className="text-xs text-slate-400 font-medium">Common Questions</span>
           </div>
@@ -94,35 +94,45 @@ export default function FAQ() {
           </p>
         </motion.div>
 
-        {/* FAQ items */}
+        {/* FAQ items: 2 Columns Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+          {faqs.map((item, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: i * 0.05 }}
+              className="glass rounded-xl overflow-hidden border border-white/5 h-fit"
+            >
+              <FaqItem
+                item={item}
+                isOpen={openIdx === i}
+                onToggle={() => setOpenIdx(openIdx === i ? null : i)}
+              />
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Premium floating contact CTA pill */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="glass rounded-2xl overflow-hidden border border-white/5"
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="mt-8 flex justify-center"
         >
-          {faqs.map((item, i) => (
-            <FaqItem
-              key={i}
-              item={item}
-              isOpen={openIdx === i}
-              onToggle={() => setOpenIdx(openIdx === i ? null : i)}
-            />
-          ))}
-        </motion.div>
-
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="text-center text-slate-500 text-sm mt-8"
-        >
-          Still have questions?{' '}
-          <a href="mailto:support@sarnik.com" className="text-indigo-400 hover:text-indigo-300 transition-colors">
-            Contact our team
+          <a
+            href="mailto:support@sarnik.com"
+            className="inline-flex items-center gap-3 glass hover:bg-white/5 border border-white/10 hover:border-indigo-500/30 rounded-full px-6 py-2.5 group transition-all duration-300 shadow-lg"
+          >
+            <span className="w-2 h-2 rounded-full bg-indigo-400 animate-pulse" />
+            <span className="text-xs text-slate-300 font-medium">
+              Still have questions? <span className="text-indigo-400 group-hover:text-indigo-300 transition-colors font-bold ml-1">Contact our team</span>
+            </span>
+            <HelpCircle className="w-3.5 h-3.5 text-indigo-400 group-hover:translate-x-0.5 transition-transform duration-300" />
           </a>
-        </motion.p>
+        </motion.div>
       </div>
     </section>
   );

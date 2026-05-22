@@ -54,17 +54,17 @@ const steps = [
 
 export default function Timeline() {
   return (
-    <section className="relative z-10 py-28 px-6">
-      <div className="max-w-4xl mx-auto">
+    <section className="relative z-10 py-6 px-6">
+      <div className="max-w-full px-6 md:px-12 lg:px-20 mx-auto">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-8"
         >
-          <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 mb-5">
+          <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 mb-3">
             <Factory className="w-3.5 h-3.5 text-purple-400" />
             <span className="text-xs text-slate-400 font-medium">How It Works</span>
           </div>
@@ -76,60 +76,58 @@ export default function Timeline() {
           </p>
         </motion.div>
 
-        {/* Timeline */}
-        <div className="relative">
-          {/* Center line — desktop */}
-          <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-indigo-500/30 to-transparent -translate-x-1/2" />
-
-          <div className="flex flex-col gap-4">
-            {steps.map((step, i) => {
-              const isLeft = i % 2 === 0;
-              return (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, x: isLeft ? -40 : 40 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: '-60px' }}
-                  transition={{ duration: 0.55, delay: i * 0.08 }}
-                  className={`relative flex items-center ${isLeft ? 'md:flex-row' : 'md:flex-row-reverse'} flex-col md:gap-8 gap-4`}
-                >
-                  {/* Card */}
-                  <div className="md:w-5/12 w-full">
-                    <motion.div
-                      whileHover={{ scale: 1.02, y: -4 }}
-                      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                      className={`glass rounded-2xl p-6 border ${step.border} bg-gradient-to-br ${step.bg} cursor-pointer`}
-                    >
-                      <div className="flex items-center gap-3 mb-3">
-                        <div className={`w-10 h-10 rounded-xl glass flex items-center justify-center ${step.color}`}>
-                          {step.icon}
-                        </div>
-                        <span className={`text-xs font-mono font-bold ${step.color}`}>{step.num}</span>
-                      </div>
-                      <h3 className="text-white font-bold text-lg mb-2">{step.title}</h3>
-                      <p className="text-slate-400 text-sm leading-relaxed">{step.desc}</p>
-                    </motion.div>
+        {/* Steps Grid: 2 Rows */}
+        <div className="w-full flex flex-col gap-6">
+          {/* Row 1: 3 cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
+            {steps.slice(0, 3).map((step, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                whileHover={{ y: -4, scale: 1.02 }}
+                className={`glass rounded-xl p-5 border ${step.border} bg-gradient-to-br ${step.bg} cursor-pointer flex flex-col justify-between h-full`}
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <div className={`w-8 h-8 rounded-lg glass flex items-center justify-center ${step.color}`}>
+                      {React.cloneElement(step.icon, { className: 'w-4 h-4' })}
+                    </div>
+                    <span className={`text-xl font-black font-mono tracking-wider ${step.color}`}>{step.num}</span>
                   </div>
+                  <h3 className="text-white font-extrabold text-sm mb-2">{step.title}</h3>
+                  <p className="text-slate-400 text-[11px] leading-relaxed">{step.desc}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
 
-                  {/* Center node */}
-                  <div className="hidden md:flex md:w-2/12 items-center justify-center">
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      whileInView={{ scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.4, delay: i * 0.1 }}
-                      className={`w-10 h-10 rounded-full bg-gradient-to-br ${step.bg} border ${step.border} flex items-center justify-center ${step.color} relative z-10`}
-                      style={{ boxShadow: `0 0 20px ${step.border.replace('border-', '').replace('/30', '')}` }}
-                    >
-                      <span className="text-xs font-bold">{i + 1}</span>
-                    </motion.div>
+          {/* Row 2: 2 cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl mx-auto">
+            {steps.slice(3, 5).map((step, i) => (
+              <motion.div
+                key={i + 3}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                whileHover={{ y: -4, scale: 1.02 }}
+                className={`glass rounded-xl p-5 border ${step.border} bg-gradient-to-br ${step.bg} cursor-pointer flex flex-col justify-between h-full`}
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <div className={`w-8 h-8 rounded-lg glass flex items-center justify-center ${step.color}`}>
+                      {React.cloneElement(step.icon, { className: 'w-4 h-4' })}
+                    </div>
+                    <span className={`text-xl font-black font-mono tracking-wider ${step.color}`}>{step.num}</span>
                   </div>
-
-                  {/* Spacer for opposite side */}
-                  <div className="md:w-5/12 hidden md:block" />
-                </motion.div>
-              );
-            })}
+                  <h3 className="text-white font-extrabold text-sm mb-2">{step.title}</h3>
+                  <p className="text-slate-400 text-[11px] leading-relaxed">{step.desc}</p>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </div>
