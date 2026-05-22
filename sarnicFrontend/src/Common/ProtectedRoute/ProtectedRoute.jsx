@@ -3,6 +3,8 @@ import {
   getDashboardPathByRole,
   getStoredUser,
 } from "../../utils/auth";
+import { checkTrialStatus } from "../../utils/trial";
+import { ROLES } from "../../utils/roles";
 
 const ProtectedRoute = ({ children, allowedRoles }) => {
   const user = getStoredUser();
@@ -12,6 +14,14 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
   }
 
   const userRole = user.role_name;
+
+  // Check trial status (only for non-superadmin users)
+  if (userRole !== ROLES.SUPERADMIN) {
+    const { expired } = checkTrialStatus();
+    if (expired) {
+      return <Navigate to="/subscription-required" replace />;
+    }
+  }
 
   if (
     allowedRoles &&
