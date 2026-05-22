@@ -1,0 +1,80 @@
+.superadmin-sidebar-container {
+  width: 250px;
+  background-color: #ffffff;
+  border-right: 1px solid #e6eaf2;
+  transition: all 0.3s ease;
+}
+
+.superadmin-sidebar-brand {
+  padding: 20px 24px;
+  border-bottom: 1px solid #eef1f6;
+}
+
+.superadmin-sidebar-brand h6 {
+  font-weight: 700;
+  color: #1f3bb3;
+}
+
+.superadmin-sidebar-brand small {
+  font-size: 12px;
+  color: #8a94a6;
+}
+
+.superadmin-menu {
+  list-style: none;
+  margin: 0;
+  padding: 12px 0;
+}
+
+.superadmin-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 24px;
+  color: #4b5563;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.superadmin-menu-item:hover {
+  background: #f1f5ff;
+  color: #1f3bb3;
+}
+
+.superadmin-menu-item.active {
+  background: #1f3bb3;
+  color: #ffffff;
+}
+
+.superadmin-menu-item .menu-icon {
+  font-size: 16px;
+  min-width: 20px;
+  color: #1f3bb3;
+}
+
+.superadmin-menu-item.active .menu-icon {
+  color: #ffffff;
+}
+
+.superadmin-sidebar-container.collapsed .menu-text {
+  display: none;
+}
+
+/* ===== Logout Item ===== */
+.superadmin-menu-item.logout-item {
+  color: #ef4444 !important;
+}
+
+.superadmin-menu-item.logout-item .menu-icon {
+  color: #ef4444 !important;
+}
+
+.superadmin-menu-item.logout-item:hover {
+  background-color: #fee2e2 !important;
+  color: #b91c1c !important;
+}
+
+.superadmin-menu-item.logout-item:hover .menu-icon {
+  color: #b91c1c !important;
+}

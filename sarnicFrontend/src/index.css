@@ -1,0 +1,24 @@
+/* Utility: prevent wrapping for inline content */
+.whitespace-nowrap {
+	white-space: nowrap !important;
+}
+
+/* Table helper: add this class to any table to prevent cell wrapping */
+.no-wrap-table th,
+.no-wrap-table td {
+	white-space: nowrap !important;
+}
+
+/* Ensure all table header and body cells never wrap by default */
+table thead th,
+table tbody td {
+	white-space: nowrap !important;
+}
+
+/* Optional global: if you prefer all tables never wrap, uncomment below
+table th,
+table td {
+	white-space: nowrap;
+}
+*/
+

@@ -1,0 +1,111 @@
+.superadmin-navbar {
+  height: 64px;
+  background: #ffffff;
+  border-bottom: 1px solid #e6eaf2;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.superadmin-navbar .nav-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.superadmin-navbar .sidebar-toggle {
+  background: #f1f5ff;
+  border: none;
+  padding: 8px 10px;
+  border-radius: 8px;
+  color: #1f3bb3;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.superadmin-navbar .sidebar-toggle:hover {
+  background: #e6ebff;
+}
+
+.superadmin-navbar .brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.superadmin-navbar .nav-logo {
+  height: 36px;
+}
+
+.superadmin-navbar .brand-badge {
+  font-size: 12px;
+  color: #1f3bb3;
+  background: #f1f5ff;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+.superadmin-navbar .nav-right .user-trigger {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  color: #111827;
+}
+
+.superadmin-navbar .profile-icon {
+  font-size: 32px;
+  color: #1f3bb3;
+}
+
+.superadmin-navbar .user-info {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.superadmin-navbar .user-info .name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.superadmin-navbar .user-info .email {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.superadmin-navbar .user-dropdown {
+  position: absolute;
+  right: 20px;
+  top: 58px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  min-width: 180px;
+  padding: 8px 0;
+}
+
+.superadmin-navbar .user-dropdown button {
+  width: 100%;
+  border: none;
+  background: none;
+  padding: 10px 16px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.superadmin-navbar .user-dropdown button:hover {
+  background: #f1f5f9;
+}
+
+.superadmin-navbar .user-dropdown .logout {
+  color: #dc3545;
+}

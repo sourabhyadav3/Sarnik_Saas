@@ -1,0 +1,154 @@
+/* ===== Sidebar Container ===== */
+.sidebar-container {
+  width: 260px;
+  min-height: 100vh;
+  background-color: #ffffff;          /* 🤍 White sidebar */
+  border-right: 1px solid #e6eaf2;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.sidebar-container.collapsed {
+  width: 70px;
+}
+
+/* ===== Sidebar Wrapper ===== */
+.sidebar {
+  padding: 10px 0;
+}
+
+/* ===== Brand Section ===== */
+.sidebar-brand {
+  padding: 20px 24px;
+  border-bottom: 1px solid #eef1f6;
+}
+
+.sidebar-brand h6 {
+  font-weight: 700;
+  color: #1f3bb3;                     /* 🔵 Brand blue */
+}
+
+.sidebar-brand small {
+  font-size: 12px;
+  color: #8a94a6;
+}
+
+/* ===== Menu ===== */
+.menu {
+  list-style: none;
+  margin: 0;
+  padding: 8px 0;
+}
+
+.menu-item {
+  margin-bottom: 4px;
+}
+
+/* ===== Menu Link ===== */
+.menu-link {
+  display: flex;
+  align-items: center;
+  padding: 12px 22px;
+  color: #4b5563;                     /* Dark gray text */
+  border-radius: 10px;
+  margin: 0 10px;
+  transition: all 0.25s ease;
+  font-weight: 500;
+}
+
+.menu-link:hover {
+  background-color: #f1f5ff;          /* Light blue hover */
+  color: #1f3bb3;
+}
+
+/* ===== Active Main Menu ===== */
+.menu-item.active > .menu-link {
+  background-color: #1f3bb3;          /* 🔵 Blue active */
+  color: #ffffff;
+}
+
+/* ===== Icons ===== */
+.menu-icon {
+  font-size: 16px;
+  min-width: 20px;
+  margin-right: 14px;
+  color: #1f3bb3;
+}
+
+.menu-item.active .menu-icon {
+  color: #ffffff;
+}
+
+/* ===== Menu Text ===== */
+.menu-text {
+  flex-grow: 1;
+  font-size: 14px;
+}
+
+/* ===== Arrow ===== */
+.arrow-icon {
+  font-size: 12px;
+  color: #9aa3b2;
+  transition: transform 0.3s;
+}
+
+.arrow-icon.rotate {
+  transform: rotate(180deg);
+}
+
+/* ===== Submenu ===== */
+.submenu {
+  margin: 6px 0 6px 44px;
+  padding-left: 12px;
+  border-left: 2px solid #e6ebff;
+}
+
+.submenu-item {
+  padding: 8px 0;
+  font-size: 13px;
+  color: #6b7280;
+  transition: 0.2s ease;
+}
+
+.submenu-item:hover {
+  color: #1f3bb3;
+}
+
+.submenu-item.active-sub {
+  color: #1f3bb3;
+  font-weight: 600;
+}
+
+/* ===== Collapsed Sidebar ===== */
+.sidebar-container.collapsed .menu-text,
+.sidebar-container.collapsed .arrow-icon,
+.sidebar-container.collapsed .submenu {
+  display: none;
+}
+
+.sidebar-container.collapsed .menu-link {
+  justify-content: center;
+}
+
+.sidebar-container.collapsed .menu-icon {
+  margin-right: 0;
+  font-size: 18px;
+}
+
+/* ===== Logout Item ===== */
+.logout-link {
+  color: #ef4444 !important;
+}
+
+.logout-link .menu-icon {
+  color: #ef4444 !important;
+}
+
+.logout-link:hover {
+  background-color: #fee2e2 !important;
+  color: #b91c1c !important;
+}
+
+.logout-link:hover .menu-icon {
+  color: #b91c1c !important;
+}

@@ -1,0 +1,35 @@
+.superadmin-layout .superadmin-sidebar-container {
+  position: fixed;
+  top: 65px;
+  left: 0;
+  height: calc(100vh - 65px);
+  background-color: #ffffff;
+  border-right: 1px solid #e6eaf2;
+  width: 250px;
+  transition: width 0.3s ease;
+  z-index: 999;
+  overflow-y: auto;
+}
+
+.superadmin-layout .superadmin-sidebar-container.collapsed {
+  width: 80px;
+}
+
+.superadmin-layout .superadmin-content {
+  margin-left: 250px;
+  padding: 30px;
+  margin-top: 65px;
+  transition: margin-left 0.3s ease;
+  min-height: calc(100vh - 65px);
+}
+
+.superadmin-layout .superadmin-content.collapsed {
+  margin-left: 80px;
+}
+
+@media (max-width: 768px) {
+  .superadmin-layout .superadmin-content,
+  .superadmin-layout .superadmin-content.collapsed {
+    margin-left: 0;
+  }
+}
