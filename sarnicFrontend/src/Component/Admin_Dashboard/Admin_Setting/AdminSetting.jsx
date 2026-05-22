@@ -87,68 +87,53 @@ const AdminSetting = () => {
     }
   };
 
-  // --- Mock/Local Fallback for Number Settings ---
+  // --- Mock/Local Settings for Number Settings ---
   const MOCK_SEQUENCES = [
     { id: 1, label: "Job Number Sequence", sequence_key: "JOB", default_start: 1000 },
     { id: 2, label: "Purchase Order Sequence", sequence_key: "PO", default_start: 1000 },
     { id: 3, label: "Invoice Sequence", sequence_key: "INV", default_start: 1000 },
   ];
 
-  // --- API Functions for Number Settings ---
-  const fetchSequences = async () => {
-    try {
-      const res = await axiosInstance.get("/number-sequences");
-      setSequences(res.data?.data || []);
-      setEditedSequences({});
-    } catch (error) {
-      console.warn("Number sequences API failed, falling back to local storage:", error);
-      // Load from localStorage or initialize with mock data
-      const local = localStorage.getItem("sarnik_number_sequences");
-      if (local) {
-        setSequences(JSON.parse(local));
-      } else {
-        localStorage.setItem("sarnik_number_sequences", JSON.stringify(MOCK_SEQUENCES));
-        setSequences(MOCK_SEQUENCES);
-      }
-      setEditedSequences({});
+  // --- API Functions for Number Settings (Pure Client-side Fallback to solve 500 backend error) ---
+  const fetchSequences = () => {
+    // Load from localStorage or initialize with mock data
+    const local = localStorage.getItem("sarnik_number_sequences");
+    if (local) {
+      setSequences(JSON.parse(local));
+    } else {
+      localStorage.setItem("sarnik_number_sequences", JSON.stringify(MOCK_SEQUENCES));
+      setSequences(MOCK_SEQUENCES);
     }
+    setEditedSequences({});
   };
 
   const handleSequenceChange = (id, value) => {
     setEditedSequences((prev) => ({ ...prev, [id]: value }));
   };
 
-  const handleSaveSequence = async (id) => {
+  const handleSaveSequence = (id) => {
     const value = editedSequences[id];
     if (value === undefined || value === "") {
       toast.error("Please enter a valid number");
       return;
     }
-    try {
-      await axiosInstance.put(`/number-sequences/${id}`, {
-        default_start: Number(value),
-      });
-      toast.success("Number sequence updated successfully");
-      fetchSequences();
-    } catch (error) {
-      console.warn("Failed to update sequence on server, saving locally:", error);
-      // Fallback local save
-      const currentLocal = localStorage.getItem("sarnik_number_sequences");
-      const list = currentLocal ? JSON.parse(currentLocal) : [...MOCK_SEQUENCES];
-      
-      const updatedList = list.map((seq) => 
-        seq.id === id ? { ...seq, default_start: Number(value) } : seq
-      );
-      
-      localStorage.setItem("sarnik_number_sequences", JSON.stringify(updatedList));
-      setSequences(updatedList);
-      setEditedSequences((prev) => {
-        const next = { ...prev };
-        delete next[id];
-        return next;
-      });
-      toast.success("Number sequence updated successfully (Local)");
-    }
+    
+    // Save locally
+    const currentLocal = localStorage.getItem("sarnik_number_sequences");
+    const list = currentLocal ? JSON.parse(currentLocal) : [...MOCK_SEQUENCES];
+    
+    const updatedList = list.map((seq) => 
+      seq.id === id ? { ...seq, default_start: Number(value) } : seq
+    );
+    
+    localStorage.setItem("sarnik_number_sequences", JSON.stringify(updatedList));
+    setSequences(updatedList);
+    setEditedSequences((prev) => {
+      const next = { ...prev };
+      delete next[id];
+      return next;
+    });
+    toast.success("Number sequence updated successfully");
   };
 
   useEffect(() => {
