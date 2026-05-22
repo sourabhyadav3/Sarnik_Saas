@@ -20,7 +20,7 @@ export default function CTA() {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="glass-strong rounded-3xl p-10 border border-indigo-500/20"
+          className="glass-strong rounded-3xl p-6 sm:p-10 border border-indigo-500/20"
           style={{ boxShadow: '0 0 80px rgba(99,102,241,0.12), 0 0 160px rgba(99,102,241,0.05)' }}
         >
           <motion.div
@@ -39,7 +39,7 @@ export default function CTA() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-5xl lg:text-6xl font-black text-white mb-5 leading-tight"
+            className="text-3xl sm:text-5xl lg:text-6xl font-black text-white mb-5 leading-tight"
           >
             Ready to Transform
             <br />
@@ -51,7 +51,7 @@ export default function CTA() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-slate-400 text-xl mb-10 max-w-xl mx-auto"
+            className="text-slate-400 text-base sm:text-lg md:text-xl mb-10 max-w-xl mx-auto"
           >
             Join 500+ companies already running on Sarnik. Set up in minutes, scale to thousands.
           </motion.p>
@@ -61,17 +61,17 @@ export default function CTA() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex flex-wrap gap-4 justify-center"
+            className="flex flex-col sm:flex-row gap-4 justify-center"
           >
             <Link
               to="/login"
-              className="btn-primary-glow text-white font-bold px-10 py-4 rounded-xl flex items-center gap-2 text-base"
+              className="btn-primary-glow text-white font-bold px-10 py-4 rounded-xl flex items-center justify-center gap-2 text-base w-full sm:w-auto"
             >
               <Zap className="w-5 h-5" />
               Start Free Trial
               <ChevronRight className="w-5 h-5" />
             </Link>
-            <button className="btn-outline-glow text-slate-300 hover:text-white font-semibold px-10 py-4 rounded-xl text-base">
+            <button className="btn-outline-glow text-slate-300 hover:text-white font-semibold px-10 py-4 rounded-xl text-base w-full sm:w-auto">
               Book a Demo
             </button>
           </motion.div>

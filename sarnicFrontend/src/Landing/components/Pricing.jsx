@@ -90,7 +90,7 @@ export default function Pricing() {
             <Zap className="w-3.5 h-3.5 text-indigo-400" />
             <span className="text-xs text-slate-400 font-medium">Simple Pricing</span>
           </div>
-          <h2 className="text-4xl lg:text-5xl font-black text-white mb-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-4">
             Choose Your <span className="gradient-text">Growth Plan</span>
           </h2>
           <p className="text-slate-400 max-w-xl mx-auto text-lg mb-8">
@@ -126,7 +126,7 @@ export default function Pricing() {
         </motion.div>
 
         {/* Pricing Cards */}
-        <div className="grid md:grid-cols-3 gap-6 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 items-start">
           {plans.map((plan, i) => (
             <motion.div
               key={plan.name}
@@ -134,7 +134,7 @@ export default function Pricing() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              className={`pricing-card glass rounded-2xl p-7 border ${plan.border} ${plan.glow} relative ${plan.popular ? 'md:-mt-4 md:mb-4' : ''}`}
+              className={`pricing-card glass rounded-2xl p-5 sm:p-7 border ${plan.border} ${plan.glow} relative ${plan.popular ? 'lg:-mt-4 lg:mb-4' : ''}`}
             >
               {plan.popular && (
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2">

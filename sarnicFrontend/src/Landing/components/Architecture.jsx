@@ -62,7 +62,7 @@ export default function Architecture() {
             <Layers className="w-3.5 h-3.5 text-amber-400" />
             <span className="text-xs text-slate-400 font-medium">Multi-Tenant Architecture</span>
           </div>
-          <h2 className="text-4xl lg:text-5xl font-black text-white mb-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-4">
             Isolation by <span className="gradient-text">Design</span>
           </h2>
           <p className="text-slate-400 max-w-xl mx-auto text-lg">

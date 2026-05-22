@@ -72,7 +72,7 @@ export default function Testimonials() {
             <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
             <span className="text-xs text-slate-400 font-medium">Customer Stories</span>
           </div>
-          <h2 className="text-4xl lg:text-5xl font-black text-white mb-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-4">
             Loved by <span className="gradient-text">Teams Worldwide</span>
           </h2>
           <p className="text-slate-400 max-w-xl mx-auto text-lg">
@@ -93,7 +93,7 @@ export default function Testimonials() {
               key={i}
               whileHover={{ scale: 1.03, y: -5 }}
               transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-              className="flex-shrink-0 w-80 glass rounded-2xl p-6 border border-white/7 cursor-pointer"
+              className="flex-shrink-0 w-72 sm:w-80 glass rounded-2xl p-6 border border-white/7 cursor-pointer"
             >
               {/* Stars */}
               <div className="flex gap-1 mb-4">

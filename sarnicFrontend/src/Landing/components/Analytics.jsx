@@ -51,7 +51,7 @@ const statItems = [
 function StatCard({ item, inView }) {
   const value = useCounter(item.target, 1800, inView);
   return (
-    <div className={`glass rounded-2xl p-5 border ${item.border}`}>
+    <div className={`glass rounded-2xl p-4 sm:p-5 border ${item.border}`}>
       <div className={`flex items-center gap-2 mb-2 ${item.color}`}>
         {item.icon}
         <span className="text-xs font-medium text-slate-400">{item.label}</span>
@@ -98,7 +98,7 @@ export default function Analytics() {
             <TrendingUp className="w-3.5 h-3.5 text-emerald-400" />
             <span className="text-xs text-slate-400 font-medium">Real-Time Analytics</span>
           </div>
-          <h2 className="text-4xl lg:text-5xl font-black text-white mb-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-4">
             Data That <span className="gradient-text">Drives Decisions</span>
           </h2>
           <p className="text-slate-400 max-w-xl mx-auto text-lg">
@@ -112,7 +112,7 @@ export default function Analytics() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8"
         >
           {statItems.map((item, i) => (
             <StatCard key={i} item={item} inView={inView} />
@@ -127,7 +127,7 @@ export default function Analytics() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="lg:col-span-2 glass rounded-2xl p-6 glow-indigo"
+            className="lg:col-span-2 glass rounded-2xl p-4 sm:p-6 glow-indigo"
           >
             <div className="flex items-center justify-between mb-4">
               <div>
@@ -161,7 +161,7 @@ export default function Analytics() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="glass rounded-2xl p-6 glow-emerald"
+            className="glass rounded-2xl p-4 sm:p-6 glow-emerald"
           >
             <div className="mb-4">
               <div className="text-white font-bold">Company Growth</div>
@@ -190,7 +190,7 @@ export default function Analytics() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="lg:col-span-3 glass rounded-2xl p-6 glow-purple"
+            className="lg:col-span-3 glass rounded-2xl p-4 sm:p-6 glow-purple"
           >
             <div className="flex items-center justify-between mb-4">
               <div>

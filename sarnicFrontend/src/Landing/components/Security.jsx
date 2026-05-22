@@ -69,7 +69,7 @@ export default function Security() {
             <Shield className="w-3.5 h-3.5 text-rose-400" />
             <span className="text-xs text-slate-400 font-medium">Enterprise Security</span>
           </div>
-          <h2 className="text-4xl lg:text-5xl font-black text-white mb-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-4">
             Security <span className="gradient-text">Built Deep</span>
           </h2>
           <p className="text-slate-400 max-w-xl mx-auto text-lg">

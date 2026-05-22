@@ -86,7 +86,7 @@ export default function FAQ() {
             <HelpCircle className="w-3.5 h-3.5 text-sky-400" />
             <span className="text-xs text-slate-400 font-medium">Common Questions</span>
           </div>
-          <h2 className="text-4xl lg:text-5xl font-black text-white mb-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-4">
             Got <span className="gradient-text">Questions?</span>
           </h2>
           <p className="text-slate-400 max-w-xl mx-auto text-lg">

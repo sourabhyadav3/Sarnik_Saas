@@ -191,6 +191,12 @@ export const createSaasCompany = async (req, res) => {
       id: result.insertId,
     });
   } catch (error) {
+    if (error.code === "ER_DUP_ENTRY") {
+      return res.status(400).json({
+        success: false,
+        message: error.message,
+      });
+    }
     if (error.code === "ER_NO_SUCH_TABLE") {
       return res.status(503).json({
         success: false,
@@ -240,6 +246,12 @@ export const updateSaasCompany = async (req, res) => {
       message: "Company updated successfully",
     });
   } catch (error) {
+    if (error.code === "ER_DUP_ENTRY") {
+      return res.status(400).json({
+        success: false,
+        message: error.message,
+      });
+    }
     res.status(500).json({ success: false, message: error.message });
   }
 };

@@ -73,15 +73,8 @@ export default function Footer() {
           <div className="text-slate-600 text-sm">
             © {new Date().getFullYear()} Workflow Management System. All rights reserved.
           </div>
-          <div className="flex items-center gap-2 text-slate-600 text-sm">
-            <div className="w-2 h-2 rounded-full bg-emerald-400 pulse-dot" />
-            All systems operational — 99.9% uptime
-          </div>
-          <div className="flex items-center gap-4">
-            <Link to="/login" className="text-slate-500 hover:text-white text-sm transition-colors">Sign In</Link>
-            <Link to="/login" className="btn-primary-glow text-white text-sm font-semibold px-4 py-1.5 rounded-lg">
-              Get Started
-            </Link>
+          <div className="text-slate-600 text-sm font-medium">
+            Powered by Kiaan Technology
           </div>
         </div>
       </div>

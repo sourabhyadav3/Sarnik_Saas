@@ -117,18 +117,18 @@ export default function Hero() {
             </motion.div>
 
             <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.1 }}
-              className="text-4xl sm:text-5xl lg:text-7xl font-black text-white leading-[1.05] mb-2">
+              className="text-3xl sm:text-5xl lg:text-7xl font-black text-white leading-[1.05] mb-2">
               Manage Your
             </motion.h1>
             <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.15 }}
-              className="text-4xl sm:text-5xl lg:text-7xl font-black leading-[1.05] mb-2 h-[1.1em] overflow-hidden">
+              className="text-3xl sm:text-5xl lg:text-7xl font-black leading-[1.05] mb-2 h-[1.1em] overflow-hidden">
               <motion.span key={wordIdx} initial={{ y: 60, opacity: 0 }} animate={{ y: 0, opacity: 1 }}
                 exit={{ y: -60, opacity: 0 }} transition={{ duration: 0.4 }} className="gradient-text block">
                 {words[wordIdx]}
               </motion.span>
             </motion.div>
             <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.2 }}
-              className="text-4xl sm:text-5xl lg:text-7xl font-black text-white leading-[1.05] mb-6">
+              className="text-3xl sm:text-5xl lg:text-7xl font-black text-white leading-[1.05] mb-6">
               Like Never Before.
             </motion.h1>
 
@@ -140,11 +140,11 @@ export default function Hero() {
 
             {/* CTAs */}
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.4 }}
-              className="flex flex-wrap gap-4 mb-10">
-              <Link to="/login" className="btn-primary-glow text-white font-semibold px-7 py-3.5 rounded-xl flex items-center gap-2 text-sm">
+              className="flex flex-col sm:flex-row gap-4 mb-10">
+              <Link to="/login" className="btn-primary-glow text-white font-semibold px-7 py-3.5 rounded-xl flex items-center justify-center gap-2 text-sm w-full sm:w-auto">
                 Start Free Trial <ChevronRight className="w-4 h-4" />
               </Link>
-              <button className="btn-outline-glow text-slate-300 hover:text-white font-medium px-7 py-3.5 rounded-xl flex items-center gap-2 text-sm">
+              <button className="btn-outline-glow text-slate-300 hover:text-white font-medium px-7 py-3.5 rounded-xl flex items-center justify-center gap-2 text-sm w-full sm:w-auto">
                 <Play className="w-4 h-4 text-indigo-400" /> Watch Demo
               </button>
             </motion.div>
@@ -206,9 +206,9 @@ export default function Hero() {
                 className="glass-strong rounded-2xl p-4 glow-indigo mb-3"
               >
                 {/* Header */}
-                <div className="flex items-center justify-between mb-3">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
                   <div className="flex items-center gap-2.5">
-                    <div className="w-7 h-7 rounded-lg bg-indigo-500/15 flex items-center justify-center">
+                    <div className="w-7 h-7 rounded-lg bg-indigo-500/15 flex items-center justify-center flex-shrink-0">
                       <Briefcase className="w-3.5 h-3.5 text-indigo-400" />
                     </div>
                     <div>
@@ -216,8 +216,8 @@ export default function Hero() {
                       <div className="text-[9px] text-slate-500 font-medium">Completed vs In-Progress jobs</div>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <div className="flex bg-white/[0.03] border border-white/5 rounded-lg p-0.5 gap-0.5">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <div className="flex bg-white/[0.03] border border-white/5 rounded-lg p-0.5 gap-0.5 flex-wrap">
                       {['7D', '30D', '12M'].map(r => (
                         <button
                           key={r}
@@ -239,7 +239,7 @@ export default function Hero() {
                 </div>
 
                 {/* Big number + legend */}
-                <div className="flex justify-between items-end mb-2">
+                <div className="flex flex-col sm:flex-row justify-between sm:items-end gap-2 mb-2">
                   <div className="flex items-end gap-2">
                     <AnimatePresence mode="wait">
                       <motion.span

@@ -29,7 +29,7 @@ const features = [
     border: 'rgba(16,185,129,0.2)',
     title: 'Production Workflow',
     desc: 'End-to-end job tracking from creation to delivery with real-time status updates and time logs.',
-    span: 'col-span-2',
+    span: 'md:col-span-2',
     chart: false,
     extra: true,
   },
@@ -40,7 +40,7 @@ const features = [
     border: 'rgba(245,158,11,0.2)',
     title: 'Smart Analytics',
     desc: 'Revenue trends, team KPIs, subscription health, and growth velocity — all in real time.',
-    span: 'col-span-2',
+    span: 'md:col-span-2',
     chart: true,
     chartColor: '#f59e0b',
     chartData: miniData2,
@@ -83,7 +83,7 @@ const features = [
     border: 'rgba(20,184,166,0.2)',
     title: 'Subscription Billing',
     desc: 'Manage SaaS plans, renewals, expirations, and company billing in one unified console.',
-    span: 'col-span-2',
+    span: 'md:col-span-2',
     chart: false,
     billing: true,
   },
@@ -129,7 +129,7 @@ export default function Features() {
             <Zap className="w-3.5 h-3.5 text-indigo-400" />
             <span className="text-xs text-slate-400 font-medium">Everything You Need</span>
           </div>
-          <h2 className="text-4xl lg:text-5xl font-black text-white mb-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-4">
             Built for <span className="gradient-text">Enterprise Scale</span>
           </h2>
           <p className="text-slate-400 max-w-xl mx-auto text-lg">
@@ -151,7 +151,7 @@ export default function Features() {
               variants={cardVariants}
               whileHover={{ y: -6, scale: 1.01 }}
               transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-              className={`bento-card glass rounded-2xl p-6 ${f.span} relative overflow-hidden`}
+              className={`bento-card glass rounded-2xl p-4 sm:p-6 ${f.span} relative overflow-hidden`}
               style={{
                 boxShadow: `0 0 0 1px ${f.border}`,
                 background: `radial-gradient(ellipse at top left, ${f.glow} 0%, rgba(2,8,23,0.0) 60%)`,
