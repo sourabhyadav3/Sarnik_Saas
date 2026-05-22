@@ -113,7 +113,7 @@ export default function Hero() {
               transition={{ duration: 0.6, delay: 0.3 }}
               className="text-slate-400 text-lg leading-relaxed mb-8 max-w-lg"
             >
-              Sarnik is a multi-tenant enterprise SaaS that unifies employee management, production workflows, real-time analytics, and subscription billing — all in one blazing-fast platform.
+              Workflow Management System is a multi-tenant enterprise SaaS that unifies employee management, production workflows, real-time analytics, and subscription billing — all in one blazing-fast platform.
             </motion.p>
 
             {/* CTAs */}

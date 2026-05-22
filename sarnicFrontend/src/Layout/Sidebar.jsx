@@ -238,7 +238,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
         <div className="sidebar-brand">
           {!collapsed && (
             <>
-              <h6 className="mb-0">ProjectFlow</h6>
+              <h6 className="mb-0">Workflow MS</h6>
               <small className="text-muted text-capitalize">
                 {role} Panel
               </small>

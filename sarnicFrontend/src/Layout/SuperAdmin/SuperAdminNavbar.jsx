@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { FaBars, FaUserCircle } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { getStoredUser, clearAuthSession } from "../../utils/auth";
-import logo from "../../assets/PhoenixLogo_L-01.png";
+import logo from "../../assets/WorkflowLogo.svg";
 import "./SuperAdminNavbar.css";
 
 const SuperAdminNavbar = ({ toggleSidebar }) => {

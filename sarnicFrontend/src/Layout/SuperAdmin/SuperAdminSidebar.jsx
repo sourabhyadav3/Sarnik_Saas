@@ -48,7 +48,7 @@ const SuperAdminSidebar = ({ collapsed, setCollapsed }) => {
         <div className="superadmin-sidebar-brand">
           {!collapsed && (
             <>
-              <h6 className="mb-0">Sarnik SaaS</h6>
+              <h6 className="mb-0">Workflow MS</h6>
               <small className="text-muted">Super Admin Panel</small>
             </>
           )}

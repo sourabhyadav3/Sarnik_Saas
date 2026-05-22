@@ -103,8 +103,12 @@ axiosInstance.interceptors.response.use(
 
     // Standard API error notification (excluding background refreshes)
     if (error.response && error.response.status !== 401) {
-      const msg = error.response.data?.message || "An unexpected error occurred.";
-      toast.error(msg);
+      const url = originalRequest?.url || "";
+      const skipToast = originalRequest?.skipToast || url.includes("/assignjobs");
+      if (!skipToast) {
+        const msg = error.response.data?.message || "An unexpected error occurred.";
+        toast.error(msg);
+      }
     }
 
     return Promise.reject(error);

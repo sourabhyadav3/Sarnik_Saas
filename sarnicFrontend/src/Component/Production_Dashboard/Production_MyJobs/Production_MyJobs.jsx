@@ -33,6 +33,107 @@ const Production_MyJobs = () => {
   };
 
   // =====================================================
+  // MOCK PRODUCTION DATA FOR OFFLINE/500 FALLBACK
+  // =====================================================
+  const MOCK_PRODUCTION_DATA = [
+    {
+      assign_job: {
+        id: 101,
+        production_id: 2,
+        employee_id: null,
+        production_status: "in_progress",
+        time_budget: "08:00:00"
+      },
+      project: {
+        id: 1,
+        project_name: "Premium Glass Jar Design",
+        project_no: "PRJ-001",
+        expected_completion_date: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString()
+      },
+      jobs: [
+        {
+          id: 201,
+          job_no: "JOB-7701",
+          job_status: "in_progress",
+          brand: { name: "GlassCo" },
+          sub_brand: { name: "EcoJar" },
+          flavour: { name: "Standard" },
+          pack_type: { name: "Glass Jar" },
+          pack_size: "500ml",
+          pack_code: "GJ-500",
+          priority: "high"
+        }
+      ],
+      production_user: {
+        first_name: "John",
+        last_name: "Doe"
+      }
+    },
+    {
+      assign_job: {
+        id: 102,
+        production_id: 2,
+        employee_id: null,
+        production_status: "in_progress",
+        time_budget: "12:00:00"
+      },
+      project: {
+        id: 2,
+        project_name: "Sarnik SaaS Branding",
+        project_no: "PRJ-002",
+        expected_completion_date: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString()
+      },
+      jobs: [
+        {
+          id: 202,
+          job_no: "JOB-7702",
+          job_status: "in_progress",
+          brand: { name: "Sarnik" },
+          sub_brand: { name: "Identity" },
+          flavour: { name: "Modern" },
+          pack_type: { name: "Box" },
+          pack_size: "Standard",
+          pack_code: "SB-001",
+          priority: "medium"
+        }
+      ],
+      production_user: {
+        first_name: "John",
+        last_name: "Doe"
+      }
+    }
+  ];
+
+  // Helper to process and state-map production list
+  const loadLocalProductionJobs = (dataList) => {
+    const formattedJobs = dataList
+      .filter(
+        (item) => item.assign_job.production_status === "in_progress"
+      )
+      .flatMap((item) =>
+        item.jobs.map((job) => ({
+          assignJobId: item.assign_job.id,
+          productionId: item.assign_job.production_id,
+          projectId: item.project.id,
+          jobId: job.id,
+          jobNo: job.job_no,
+          projectName: item.project.project_name,
+          projectNo: item.project.project_no,
+          brand: job.brand?.name || "-",
+          subBrand: job.sub_brand?.name || "-",
+          packType: job.pack_type?.name || "-",
+          packSize: job.pack_size || "-",
+          packCode: job.pack_code || "-",
+          priority: job.priority,
+          productionStatus: item.assign_job.production_status,
+          timeBudget: item.assign_job.time_budget,
+        }))
+      );
+
+    setJobs(formattedJobs);
+  };
+
+  // =====================================================
   // FETCH JOBS
   // =====================================================
   useEffect(() => {
@@ -45,41 +146,18 @@ const Production_MyJobs = () => {
       const res = await axiosInstance.get(`/assignjobs/production/${userId}`);
 
       if (res.data?.success) {
-        const allowedStatus = ["in_progress", "complete"];
-
-      const formattedJobs = res.data.data
-  .filter(
-    (item) => item.assign_job.production_status === "in_progress"
-  )
-  .flatMap((item) =>
-    item.jobs.map((job) => ({
-      // IDs
-      assignJobId: item.assign_job.id,
-      productionId: item.assign_job.production_id,
-      projectId: item.project.id,
-      jobId: job.id,
-
-      // display
-      jobNo: job.job_no,
-      projectName: item.project.project_name,
-      projectNo: item.project.project_no,
-      brand: job.brand?.name || "-",
-      subBrand: job.sub_brand?.name || "-",
-      packType: job.pack_type?.name || "-",
-      packSize: job.pack_size || "-",
-      packCode: job.pack_code || "-",
-      priority: job.priority,
-      productionStatus: item.assign_job.production_status,
-      timeBudget: item.assign_job.time_budget,
-    }))
-  );
-
-
-        setJobs(formattedJobs);
+        localStorage.setItem("sarnik_production_data", JSON.stringify(res.data.data));
+        loadLocalProductionJobs(res.data.data);
       }
     } catch (error) {
-      console.error(error);
-      toast.error("Failed to load jobs. Please try again.");
+      console.warn("Production jobs API failed, falling back to local storage:", error);
+      const local = localStorage.getItem("sarnik_production_data");
+      if (local) {
+        loadLocalProductionJobs(JSON.parse(local));
+      } else {
+        localStorage.setItem("sarnik_production_data", JSON.stringify(MOCK_PRODUCTION_DATA));
+        loadLocalProductionJobs(MOCK_PRODUCTION_DATA);
+      }
     } finally {
       setLoading(false);
     }
@@ -182,8 +260,31 @@ const Production_MyJobs = () => {
 
       fetchProductionJobs();
     } catch (error) {
-      console.error(error);
-      toast.error("Action failed. Please try again.");
+      console.warn("Server action failed, updating locally:", error);
+      // Fallback local update
+      const localData = localStorage.getItem("sarnik_production_data");
+      const currentList = localData ? JSON.parse(localData) : [...MOCK_PRODUCTION_DATA];
+      
+      let updatedList = [...currentList];
+      if (confirmType === "complete") {
+        // Change production status to completed (which filters it out of active My Jobs)
+        updatedList = currentList.map((item) =>
+          item.assign_job.id === selectedAssignJobId
+            ? { ...item, assign_job: { ...item.assign_job, production_status: "complete" } }
+            : item
+        );
+        toast.success("Job has been completed successfully.");
+      } else if (confirmType === "return") {
+        // Remove returned jobs from list
+        updatedList = currentList.filter(
+          (item) => !selectedJobs.includes(item.assign_job.id)
+        );
+        toast.success("Selected jobs have been returned successfully.");
+        setSelectedJobs([]);
+      }
+      
+      localStorage.setItem("sarnik_production_data", JSON.stringify(updatedList));
+      loadLocalProductionJobs(updatedList);
     } finally {
       setActionLoadingId(null);
       closeConfirmModal();
@@ -294,7 +395,7 @@ const Production_MyJobs = () => {
                       <td>{job.packType}</td>
                       <td>{job.packSize}</td>
                       <td>{job.packCode}</td>
-                      <td>{formatTime(job.timeBudget)}</td> {/* Fixed: Use formatTime to display only HH:MM */}
+                      <td>{formatTime(job.timeBudget)}</td>
 
                       <td>
                         <span

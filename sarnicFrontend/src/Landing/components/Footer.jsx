@@ -28,10 +28,10 @@ export default function Footer() {
               <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
                 <Zap className="w-4 h-4 text-white" />
               </div>
-              <span className="text-white font-bold text-xl tracking-tight">Sarnik</span>
+              <span className="text-white font-bold text-xl tracking-tight">Workflow MS</span>
             </div>
             <p className="text-slate-500 text-sm leading-relaxed mb-5 max-w-xs">
-              The enterprise SaaS platform for managing people, production, and revenue at scale.
+              The enterprise SaaS platform for managing workflows, production, and revenue at scale.
             </p>
             <div className="flex gap-3">
               {socials.map((s) => (
@@ -71,7 +71,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="text-slate-600 text-sm">
-            © {new Date().getFullYear()} Sarnik SaaS. All rights reserved.
+            © {new Date().getFullYear()} Workflow Management System. All rights reserved.
           </div>
           <div className="flex items-center gap-2 text-slate-600 text-sm">
             <div className="w-2 h-2 rounded-full bg-emerald-400 pulse-dot" />

@@ -17,7 +17,7 @@ import Footer from './components/Footer';
 export default function LandingPage() {
   // Prevent the existing app layout from mounting
   useEffect(() => {
-    document.title = 'Sarnik — Enterprise SaaS Platform';
+    document.title = 'Workflow Management System';
   }, []);
 
   return (

@@ -87,22 +87,18 @@ const AdminSetting = () => {
     }
   };
 
-  // --- Mock/Local Settings for Number Settings ---
-  const MOCK_SEQUENCES = [
-    { id: 1, label: "Job Number Sequence", sequence_key: "JOB", default_start: 1000 },
-    { id: 2, label: "Purchase Order Sequence", sequence_key: "PO", default_start: 1000 },
-    { id: 3, label: "Invoice Sequence", sequence_key: "INV", default_start: 1000 },
-  ];
-
-  // --- API Functions for Number Settings (Pure Client-side Fallback to solve 500 backend error) ---
-  const fetchSequences = () => {
-    // Load from localStorage or initialize with mock data
-    const local = localStorage.getItem("sarnik_number_sequences");
-    if (local) {
-      setSequences(JSON.parse(local));
-    } else {
-      localStorage.setItem("sarnik_number_sequences", JSON.stringify(MOCK_SEQUENCES));
-      setSequences(MOCK_SEQUENCES);
+  // --- API Functions for Number Settings (Using real backend database records) ---
+  const fetchSequences = async () => {
+    try {
+      const res = await axiosInstance.get("/number-sequences");
+      if (res.data?.success) {
+        setSequences(res.data.data || []);
+      } else {
+        toast.error("Failed to load number sequences");
+      }
+    } catch (error) {
+      console.error("Error fetching number sequences:", error);
+      toast.error("Failed to load number sequences from database");
     }
     setEditedSequences({});
   };
@@ -111,29 +107,27 @@ const AdminSetting = () => {
     setEditedSequences((prev) => ({ ...prev, [id]: value }));
   };
 
-  const handleSaveSequence = (id) => {
+  const handleSaveSequence = async (id) => {
     const value = editedSequences[id];
     if (value === undefined || value === "") {
       toast.error("Please enter a valid number");
       return;
     }
     
-    // Save locally
-    const currentLocal = localStorage.getItem("sarnik_number_sequences");
-    const list = currentLocal ? JSON.parse(currentLocal) : [...MOCK_SEQUENCES];
-    
-    const updatedList = list.map((seq) => 
-      seq.id === id ? { ...seq, default_start: Number(value) } : seq
-    );
-    
-    localStorage.setItem("sarnik_number_sequences", JSON.stringify(updatedList));
-    setSequences(updatedList);
-    setEditedSequences((prev) => {
-      const next = { ...prev };
-      delete next[id];
-      return next;
-    });
-    toast.success("Number sequence updated successfully");
+    try {
+      const res = await axiosInstance.put(`/number-sequences/${id}`, {
+        default_start: Number(value),
+      });
+      if (res.data?.success) {
+        toast.success("Number sequence updated successfully in database");
+        fetchSequences();
+      } else {
+        toast.error("Failed to update number sequence");
+      }
+    } catch (error) {
+      console.error("Error updating number sequence:", error);
+      toast.error("Failed to update number sequence in database");
+    }
   };
 
   useEffect(() => {

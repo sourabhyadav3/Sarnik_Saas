@@ -94,6 +94,45 @@ async function initTenantDbSchema() {
     }
     console.log("✅ Phase 2 Multi-Tenant Database Migration Completed successfully.");
 
+    // 1b. Add pack_code column to jobs table if missing (needed for frontend text input compatibility)
+    const [packCodeCols] = await connection.query(
+      `SELECT COLUMN_NAME 
+       FROM INFORMATION_SCHEMA.COLUMNS 
+       WHERE TABLE_SCHEMA = ? AND TABLE_NAME = 'jobs' AND COLUMN_NAME = 'pack_code'`,
+      [dbName]
+    );
+
+    if (packCodeCols.length === 0) {
+      console.log(`🔧 Adding pack_code to table: jobs...`);
+      await connection.query(
+        `ALTER TABLE \`jobs\` ADD COLUMN pack_code VARCHAR(255) NULL DEFAULT NULL`
+      );
+      console.log(`✅ Successfully added pack_code to table: jobs`);
+    }
+
+    // 1c. Initialize number_sequences table and seed if empty
+    await connection.query(`
+      CREATE TABLE IF NOT EXISTS number_sequences (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        sequence_key VARCHAR(50) NOT NULL UNIQUE,
+        label VARCHAR(100) NOT NULL,
+        default_start INT NOT NULL DEFAULT 0
+      )
+    `);
+    
+    const [existingSeqs] = await connection.query(`SELECT COUNT(*) AS count FROM number_sequences`);
+    if (existingSeqs[0].count === 0) {
+      console.log("🌱 Seeding default number sequences...");
+      await connection.query(`
+        INSERT INTO number_sequences (sequence_key, label, default_start) VALUES
+          ('project_no', 'Project Number', 2093),
+          ('job_no', 'Job Number', 18542),
+          ('estimate_no', 'Estimate Number', 6607),
+          ('invoice_no', 'Invoice Number', 5000)
+      `);
+      console.log("✅ Default number sequences seeded.");
+    }
+
     // 2. Initialize security-related tables
     console.log("⏳ Initializing security tables...");
 
