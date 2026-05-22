@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { FaBell, FaUserCircle, FaBars } from "react-icons/fa";
 import "./Navbar.css";
 import { Link } from "react-router-dom";
-import logo from "../assets/PhoenixLogo_L-01.png";
+import logo from "../assets/WorkflowLogo.svg";
 
 
 const Navbar = ({ toggleSidebar }) => {
@@ -36,7 +36,7 @@ const Navbar = ({ toggleSidebar }) => {
         </button>
 
         <div className="brand">
-          <img src={logo} alt="Phoenix Logo" className="nav-logo" />
+          <img src={logo} alt="Workflow MS Logo" className="nav-logo" />
         </div>
       </div>
 

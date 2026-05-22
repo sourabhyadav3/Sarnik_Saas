@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 60" width="100%" height="100%">
+  <defs>
+    <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4f46e5" />
+      <stop offset="100%" stop-color="#9333ea" />
+    </linearGradient>
+    <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1e1b4b" />
+      <stop offset="100%" stop-color="#312e81" />
+    </linearGradient>
+  </defs>
+  <!-- Logo Icon -->
+  <g transform="translate(5, 5)">
+    <!-- Outer gradient square with smooth rounded corners -->
+    <rect x="0" y="0" width="50" height="50" rx="14" fill="url(#logoGrad)" />
+    <!-- Sleek connected lines inside -->
+    <path d="M15 35 L22 20 L28 30 L35 15" fill="none" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" />
+    <circle cx="15" cy="35" r="4.5" fill="#ffffff" />
+    <circle cx="22" cy="20" r="3.5" fill="#ffffff" />
+    <circle cx="28" cy="30" r="3.5" fill="#ffffff" />
+    <circle cx="35" cy="15" r="4.5" fill="#ffffff" />
+  </g>
+  <!-- Logo Text -->
+  <text x="68" y="30" font-family="system-ui, -apple-system, sans-serif" font-weight="800" font-size="22" fill="url(#textGrad)" letter-spacing="0.5">Workflow</text>
+  <text x="178" y="30" font-family="system-ui, -apple-system, sans-serif" font-weight="800" font-size="22" fill="#4f46e5" letter-spacing="0.5">MS</text>
+  <text x="68" y="46" font-family="system-ui, -apple-system, sans-serif" font-weight="700" font-size="8.5" fill="#64748b" letter-spacing="1.8">MANAGEMENT SYSTEM</text>
+</svg>
